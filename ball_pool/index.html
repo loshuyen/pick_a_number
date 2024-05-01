@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"> 
+    <title>Who is lucky?</title>
+    <style>
+      body {
+        margin: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .container {
+        flex: none;
+        width: 800px;
+        text-align: center;
+        border-color: rgba(0, 0, 0, 0.273);
+        border-style: groove;
+      }
+      .container div {
+        padding: 10px;
+      }
+      .title {
+        background-color: rgb(34, 51, 67);
+        color: white;
+        font-size: 30px;
+      }
+      .title p {
+        margin: 0;
+        padding: 10px;
+      }
+      input {
+        height: 50px;
+        font-size: 20px;
+      }
+      button {
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="container">
+        <div class="title"><p>幸運彩球池</p></div>
+        <div>
+          <input
+            type="text"
+            id="ball_count"
+            name="ball_count"
+            placeholder="請輸入彩球數量"
+            style="text-align: center"
+          />
+        </div>
+        <div id="pool"></div>
+        <div id="start">
+          <button onclick="startGame()">開始</button>
+        </div>
+        <div id="pick" style="display: none">
+          <button onclick="pickBall()">抽一球</button>
+        </div>
+        <div id="result"></div>
+        <div id="reload" style="display: none">
+          <button onclick="location.reload()">重新設定</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      let pool = [];
+
+      function startGame() {
+        const ballCounts = parseFloat(document.getElementById("ball_count").value);
+        if (!(Number.isInteger(ballCounts) && ballCounts > 0)) {
+          alert("請輸入大於0的整數");
+          return location.reload();
+        }
+        for (let i = 1; i <= ballCounts; i++) {
+          pool.push(i);
+        }
+        const e = document.getElementById("pool");
+        document.getElementById("start").style.display = "none";
+        document.getElementById("pick").style.display = "block";
+        document.getElementById("reload").style.display = "block";
+        document.getElementById("ball_count").style.display = "none";
+        return (e.textContent = "球池 " + pool);
+      }
+
+      function pickBall() {
+        const ball_count = pool.length;
+        if (ball_count == 0) {
+          const e = document.getElementById("result");
+          e.innerHTML = `<h3>沒有球囉！</h3>`;
+          return;
+        }
+        const index = Math.floor(Math.random() * ball_count);
+        const result = pool[index];
+        const e = document.getElementById("result");
+        e.innerHTML = `<h3>${result}號 恭喜中獎！</h3>`;
+        pool = pool.filter(item => item !== result);
+        document.getElementById("pool").textContent = "球池 " + pool;
+        return;
+      }
+    </script>
+  </body>
+</html>
