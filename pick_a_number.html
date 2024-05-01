@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"> 
+    <title>Who is lucky?</title>
+    <style>
+      body {
+        margin: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .container {
+        flex: none;
+        width: 800px;
+        text-align: center;
+        border-color: rgba(0, 0, 0, 0.273);
+        border-style: groove;
+      }
+      .container div {
+        padding: 10px;
+      }
+      .title {
+        background-color: rgb(34, 51, 67);
+        color: white;
+        font-size: 30px;
+      }
+      .title p {
+        margin: 0;
+        padding: 10px;
+      }
+      input {
+        height: 50px;
+        font-size: 20px;
+      }
+      button {
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="container">
+        <div class="title"><p>隨機抽籤</p></div>
+        <div>
+          <input
+            type="text"
+            id="people_count"
+            name="people_count"
+            placeholder="請輸入人數"
+            style="text-align: center"
+            oninput="updateOption()"
+          />
+        </div>
+        <div id="choice"></div>
+        <div>
+          <button onclick="get_result()">誰中獎</button>
+        </div>
+        <div id="result"></div>
+      </div>
+    </div>
+    <script>
+      function updateOption() {
+        const playerCounts = document.getElementById("people_count").value;
+        let options = "";
+        for (let i = 1; i <= playerCounts; i++) {
+          options += `${i}, `;
+        }
+        const e = document.getElementById("choice");
+        return (e.textContent = "選一個數字 " + options);
+      }
+
+      function get_result() {
+        const playerCounts = document.getElementById("people_count").value;
+        if (!playerCounts) {
+            return alert("請輸入人數");
+        }
+        const result = Math.floor(Math.random() * playerCounts) + 1;
+        const e = document.getElementById("result");
+        e.innerHTML = `<h3>${result}號 恭喜中獎！</h3>`;
+      }
+    </script>
+  </body>
+</html>
